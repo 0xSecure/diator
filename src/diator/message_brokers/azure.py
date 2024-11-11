@@ -21,4 +21,4 @@ class AzureMessageBroker:
 
 
 def _parse_message(message: Message) -> ServiceBusMessage:
-    return ServiceBusMessage(orjson.dumps(message), content_type="application/json")
+    return ServiceBusMessage(orjson.dumps(message.model_dump()), content_type="application/json")

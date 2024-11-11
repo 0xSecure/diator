@@ -1,9 +1,10 @@
-from dataclasses import dataclass, field
 from uuid import UUID, uuid4
 
+import pydantic
+from pydantic import BaseModel
 
-@dataclass(frozen=True, kw_only=True)
-class Request:
+
+class Request(BaseModel):
     """
     Base class for request-type objects.
 
@@ -12,15 +13,13 @@ class Request:
 
     Usage::
 
-      @dataclass(frozen=True, kw_only=True)
       class JoinMeetingCommand(Request):
-          meeting_id: int = field()
-          user_id: int = field()
+          meeting_id: int
+          user_id: int
 
-      @dataclass(frozen=True, kw_only=True)
       class ReadMeetingByIdQuery(Request):
-          meeting_id: int = field()
+          meeting_id: int
 
     """
 
-    request_id: UUID = field(default_factory=uuid4)
+    request_id: UUID = pydantic.Field(default_factory=uuid4)

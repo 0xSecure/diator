@@ -1,21 +1,19 @@
-from dataclasses import dataclass, field
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 from diator.dispatcher import DefaultDispatcher
 from diator.events import Event
 from diator.middlewares import MiddlewareChain
 from diator.requests import Request, RequestHandler
 from diator.requests.map import RequestMap
+from diator.response import Response
 
 
-@dataclass(kw_only=True)
-class ReadMeetingDetailsQuery:
-    meeting_room_id: UUID = field()
+class ReadMeetingDetailsQuery(Request):
+    meeting_room_id: str
 
 
-@dataclass(kw_only=True)
-class ReadMeetingDetailsQueryResult:
-    meeting_room_id: UUID = field()
+class ReadMeetingDetailsQueryResult(Response):
+    meeting_room_id: str
 
 
 class ReadMeetingDetailsQueryHandler(
@@ -53,7 +51,7 @@ async def test_default_dispatcher_logic() -> None:
         middleware_chain=middleware_chain,
     )
 
-    request = ReadMeetingDetailsQuery(meeting_room_id=uuid4())
+    request = ReadMeetingDetailsQuery(meeting_room_id=str(uuid4()))
 
     result = await dispatcher.dispatch(request)
 
@@ -72,7 +70,7 @@ async def test_default_dispatcher_chain_logic() -> None:
         middleware_chain=middleware_chain,
     )
 
-    request = ReadMeetingDetailsQuery(meeting_room_id=uuid4())
+    request = ReadMeetingDetailsQuery(meeting_room_id=str(uuid4()))
 
     result = await dispatcher.dispatch(request)
 

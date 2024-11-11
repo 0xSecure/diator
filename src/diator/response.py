@@ -1,8 +1,7 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 
-@dataclass(frozen=True, kw_only=True)
-class Response:
+class Response(BaseModel):
     """
     Base class for response type objects.
 
@@ -12,10 +11,9 @@ class Response:
 
     Usage::
 
-        @dataclass(frozen=True, kw_only=True)
         class ReadMeetingQueryResult(Response):
-            meeting_id: int = field()
-            link: str = field()
-            status: MeetingStatusEnum = field()
+            meeting_id: int
+            link: str
+            status: MeetingStatusEnum
 
     """

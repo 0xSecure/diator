@@ -1,8 +1,6 @@
 import logging
 from functools import singledispatchmethod
 
-from dataclass_factory import Factory
-
 from diator.container.protocol import Container
 from diator.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
 from diator.events.map import EventMap
@@ -34,10 +32,10 @@ class EventEmitter:
     """
 
     def __init__(
-        self,
-        event_map: EventMap,
-        container: Container,
-        message_broker: MessageBroker | None = None,
+            self,
+            event_map: EventMap,
+            container: Container,
+            message_broker: MessageBroker | None = None,
     ) -> None:
         self._event_map = event_map
         self._container = container
@@ -92,13 +90,9 @@ class EventEmitter:
 
 
 def _build_message(event: NotificationEvent | ECSTEvent) -> Message:
-    factory = Factory()
-
-    payload = factory.dump(event)
-
     return Message(
         message_type=event._event_type,
         message_name=type(event).__name__,
         message_id=event.event_id,
-        payload=payload,
+        payload=event.model_dump(),
     )

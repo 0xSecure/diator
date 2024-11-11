@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 import pytest
 from redis import asyncio as redis
 from rodi import Container, ServiceLifeStyle
@@ -12,7 +10,6 @@ from diator.middlewares import MiddlewareChain
 from diator.requests import Request, RequestHandler, RequestMap
 
 
-@dataclass(frozen=True, kw_only=True)
 class JoinMeetingRoomCommand(Request):
     meeting_id: int
     user_id: int

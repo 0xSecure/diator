@@ -1,8 +1,8 @@
 from typing import Protocol, TypeVar
 
-from diator.events.event import DomainEvent
+from diator.events import Event
 
-E = TypeVar("E", bound=DomainEvent, contravariant=True)
+E = TypeVar("E", bound=Event, contravariant=True)
 
 
 class EventHandler(Protocol[E]):

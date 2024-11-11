@@ -20,4 +20,4 @@ class RedisMessageBroker:
             await pubsub.subscribe(channel)
 
             logger.debug("Sending message to Redis Pub/Sub %s.", message.message_id)
-            await self._client.publish(channel, orjson.dumps(message))
+            await self._client.publish(channel, orjson.dumps(message.model_dump()))

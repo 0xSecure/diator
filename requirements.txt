@@ -4,8 +4,8 @@ flake8
 mypy
 black
 types-redis
-vulture
-dataclass_factory
+vultur
+pydantic
 isort
 orjson
 redis

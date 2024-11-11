@@ -1,21 +1,20 @@
-from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import UUID, uuid4
 
+import pydantic
+from pydantic import BaseModel
 
-@dataclass(frozen=True, kw_only=True)
-class Event:
+
+class Event(BaseModel):
     ...
 
 
-@dataclass(frozen=True, kw_only=True)
 class DomainEvent(Event):
     """
     The base class for domain events.
     """
 
 
-@dataclass(frozen=True, kw_only=True)
 class NotificationEvent(Event):
     """
     The base class for notification events.
@@ -32,12 +31,11 @@ class NotificationEvent(Event):
 
     """
 
-    event_id: UUID = field(default_factory=uuid4)
-    event_timestamp: datetime = field(default_factory=datetime.utcnow)
+    event_id: UUID = pydantic.Field(default_factory=uuid4)
+    event_timestamp: datetime = pydantic.Field(default_factory=datetime.now)
     _event_type = "notification_event"
 
 
-@dataclass(frozen=True, kw_only=True)
 class ECSTEvent(Event):
     """
     Base class for ECST events.
@@ -58,6 +56,6 @@ class ECSTEvent(Event):
 
     """
 
-    event_id: UUID = field(default_factory=uuid4)
-    event_timestamp: datetime = field(default_factory=datetime.utcnow)
+    event_id: UUID = pydantic.Field(default_factory=uuid4)
+    event_timestamp: datetime = pydantic.Field(default_factory=datetime.utcnow)
     _event_type = "ecst_event"

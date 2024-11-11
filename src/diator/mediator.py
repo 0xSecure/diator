@@ -51,11 +51,11 @@ class Mediator:
         dispatch_result = await self._dispatcher.dispatch(request)
 
         if dispatch_result.events:
-            await self._send_events(dispatch_result.events.copy())
+            await self.send_events(dispatch_result.events.copy())
 
         return dispatch_result.response
 
-    async def _send_events(self, events: list[Event]) -> None:
+    async def send_events(self, events: list[Event]) -> None:
         if not self._event_emitter:
             return
 
